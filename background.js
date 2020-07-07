@@ -4,6 +4,16 @@
 
 'use strict';
 
+// chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+//   if (changeInfo.status == 'complete') {
+//     console.log(tab);
+//     console.log(tabId)
+//     console.log('things');
+//     window.alert('loaded');
+
+//   }
+// })
+
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({color: '#3aa757'}, function() {
     console.log('The color is green.');
@@ -12,6 +22,9 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
         pageUrl: {hostEquals: 'developer.chrome.com'},
+      })],
+      conditions: [new chrome.declarativeContent.PageStateMatcher({
+        pageUrl: {hostContains: 'splunk'},
       })],
       actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
