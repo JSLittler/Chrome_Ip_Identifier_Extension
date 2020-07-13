@@ -24,7 +24,9 @@ runDecorator = () => {
         populatePageNodes();
         const array = getNodeText().filter(e => { return /\S/.test(e); });
         const cleanArray = array.filter(Boolean);
-        return cleanArray.filter(e => { return e.search(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/) > -1; });
+        const finalCleanArray = cleanArray.filter(e => { return e.search(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/) > -1; });
+
+        return [...new Set(finalCleanArray)];
     };
 
     pageIpDecoration = () => {
@@ -75,6 +77,10 @@ const decoratingManager = () => window.setInterval(() => {
         clearInterval(decoratingManager);
         return;
     }
+
+    // if (ipArray.length > ipDetailsArray.length) {
+    //     runDecorator();
+    // }
 
     if (document.readyState === 'complete') {
         runDecorator();
