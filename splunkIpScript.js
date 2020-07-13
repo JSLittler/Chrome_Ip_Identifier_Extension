@@ -1,6 +1,29 @@
 let ipArray = [];
 let ipDetailsArray = [];
 
+const GetFlag = (cc) => {
+
+    // country code regex
+const CC_REGEX = /^[a-z]{2}$/i;
+
+// offset between uppercase ascii and regional indicator symbols
+const OFFSET = 127397;
+
+    
+
+    if (!CC_REGEX.test(cc)) {
+        const type = typeof cc;
+        throw new TypeError(
+          `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
+            type === 'string' ? cc : type
+          }' instead.`,
+        );
+      }
+    
+      const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
+      return String.fromCodePoint(...chars);
+}
+
 runDecorator = () => {
     let pageNodes = [...document.body.childNodes];
 
@@ -34,7 +57,13 @@ runDecorator = () => {
             const newElement = document.createElement("div")
             newElement.classList = "special-ip"
             newElement.style = "color : green";
-            newElement.innerText = ipDetails.ip + " " + ipDetails.country_code;
+            newElement.innerText = ipDetails.ip;
+            const newSpan = document.createElement("div");
+            newSpan.classList = "extra-ip-city";
+            newSpan.innerText = ipDetails.city + " " + GetFlag(ipDetails.country_code);
+            newElement.appendChild(newSpan);
+             
+
 
             const thisNode = pageNodes.find(node => node.nodeValue == ipDetails.ip);
 
