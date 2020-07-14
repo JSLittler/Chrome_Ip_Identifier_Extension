@@ -1,27 +1,25 @@
+let oldIpArray = [];
 let ipArray = [];
 let ipDetailsArray = [];
 
 const GetFlag = (cc) => {
-
     // country code regex
-const CC_REGEX = /^[a-z]{2}$/i;
+    const CC_REGEX = /^[a-z]{2}$/i;
 
-// offset between uppercase ascii and regional indicator symbols
-const OFFSET = 127397;
-
-    
+    // offset between uppercase ascii and regional indicator symbols
+    const OFFSET = 127397;
 
     if (!CC_REGEX.test(cc)) {
         const type = typeof cc;
         throw new TypeError(
-          `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
-            type === 'string' ? cc : type
-          }' instead.`,
+            `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
+                type === 'string' ? cc : type
+            }' instead.`,
         );
-      }
+    };
     
-      const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
-      return String.fromCodePoint(...chars);
+    const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
+    return String.fromCodePoint(...chars);
 }
 
 runDecorator = () => {
@@ -77,12 +75,12 @@ runDecorator = () => {
                 response => {
                     response.json().then(
                         data => {
-                            console.log('response');
                             ipDetailsArray.push(data);
                             if (index == ipArray.length - 1) {
                                 pageIpDecoration();
                             }
-                        });
+                        }
+                    );
                 }
             );
         });
@@ -91,11 +89,12 @@ runDecorator = () => {
     const tracePageIps = () => {
         ipArray = getIpsOnPage();
 
-        if (ipArray.length < 1) {
+        if (ipArray.length < 1 || ipArray === oldIpArray) {
             return;
         }
 
         buildIpDecoration();
+        oldIpArray = ipArray;
     };
 
     tracePageIps();
@@ -107,13 +106,12 @@ const decoratingManager = () => window.setInterval(() => {
         return;
     }
 
-    // if (ipArray.length > ipDetailsArray.length) {
-    //     runDecorator();
-    // }
-
     if (document.readyState === 'complete') {
         runDecorator();
     }
-}, 1000);
+}, 1000)
+.then(
+    document.body.addEventListener("hashchange", runDecorator, false)
+);
 
 decoratingManager();
