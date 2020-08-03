@@ -118,7 +118,7 @@ const decoratingManager = () => window.setInterval(() => {
 
 decoratingManager();
 
-const targetNode = document.getElementsByTagName('body')[0];
+const targetNode = document.body;
 
 // Options for the observer (which mutations to observe)
 const config = { attributes: true, childList: true, subtree: true };
