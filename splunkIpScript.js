@@ -111,13 +111,21 @@ runDecorator = () => {
         const cleanArray = array.filter(Boolean);
         const finalCleanArray = cleanArray.filter(e => { return e.search(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/) > -1; });
 
+
+
         return [...new Set(finalCleanArray)];
     };
 
     pageIpDecoration = () => {
 
+
+
         ipArray.forEach(ip => {
+
             let ipDetails = ipStore.getIpDetails(ip)[0];
+            if (!ipDetails) {
+                return;
+            }
             const newElement = document.createElement("div")
             newElement.classList = "special-ip"
             newElement.style = "color : green";
@@ -149,13 +157,14 @@ runDecorator = () => {
         for (let index = 0; index < ipArray.length; index++) {
             const ip = ipArray[index];
 
-            function hitApi(ip){
-
-            }
     
-            let ipEntry = ipStore.ipStoreArray.filter((e) => {e.ip == ip})
+            let ipEntry = ipStore.getIpDetails(ip);
+ 
             if (ipEntry.length > 0) {
-                return;
+
+                
+
+                continue;
             } else {
                 let response = await fetch((`https://ipapi.co/${ip}/json/`));
                 let data = await response.json()
@@ -164,9 +173,11 @@ runDecorator = () => {
                 
                 
                     ipStore.addIpDetailsToStore(data)
-                    if (index == ipArray.length - 1) {
+                    console.log(ip);
+                    console.log(index);
+                    
                         pageIpDecoration()
-                    }
+                    
                 }; 
             }
 
@@ -254,7 +265,7 @@ runDecorator = () => {
     tracePageIps();
 };
 
-const decoratingManager = () => window.setInterval(() => {
+const decoratingManager = () => {
     // if (ipStore.getAllIpDetails().length) {
     //     clearInterval(decoratingManager);
     //     return;
@@ -263,6 +274,31 @@ const decoratingManager = () => window.setInterval(() => {
     if (document.readyState === 'complete') {
         runDecorator();
     }
-}, 5000);
+};
+
+decoratingManager();
+
+
+const targetNode = document.body;
+
+// Options for the observer (which mutations to observe)
+const config = { attributes: true, childList: true, subtree: true, characterData: true };
+
+// Callback function to execute when mutations are observed
+const callback = function(mutationsList, observer) {
+
+    for(let mutation of mutationsList) {
+        if (mutation.type === 'characterData' ) {
+            console.log('*** ', mutation.type, ' ***', ' A page element has been changed');
+            decoratingManager();
+        }
+    }
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
+
+// Start observing the target node for configured mutations
+observer.observe(targetNode, config);
 
 decoratingManager();
