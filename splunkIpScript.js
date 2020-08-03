@@ -1,3 +1,4 @@
+let isDecoratorRunning = false;
 let ipArray = [];
 let ipDetailsArray = [];
 
@@ -127,10 +128,11 @@ const config = { attributes: true, childList: true, subtree: true, characterData
 const callback = function(mutationsList, observer) {
     // Use traditional 'for loops' for IE 11
     for(let mutation of mutationsList) {
-        // if (mutation.type === 'characterData') {
+        if (mutation.type === 'characterData' && !isDecoratorRunning) {
+            isDecoratorRunning = true;
             console.log('*** ', mutation.type, ' ***', ' A page element has been changed');
             // decoratingManager();
-        // }
+        }
     }
 };
 
