@@ -117,3 +117,24 @@ const decoratingManager = () => window.setInterval(() => {
 }, 1000);
 
 decoratingManager();
+
+const targetNode = document.getElementById('body');
+
+// Options for the observer (which mutations to observe)
+const config = { attributes: true, childList: true, subtree: true };
+
+// Callback function to execute when mutations are observed
+const callback = function(mutationsList, observer) {
+    // Use traditional 'for loops' for IE 11
+    for(let mutation of mutationsList) {
+        if (mutation.type === 'subtree') {
+            console.log('A page element has been changed');
+        }
+    }
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(decoratingManager);
+
+// Start observing the target node for configured mutations
+observer.observe(targetNode, config);
