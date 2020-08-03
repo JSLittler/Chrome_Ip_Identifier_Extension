@@ -2,13 +2,13 @@ let isDecoratorRunning = false;
 let ipArray = [];
 let ipDetailsArray = [];
 
+const isDocumentReady = () => {
+    return !ipDetailsArray.length && document.readyState === 'complete';
+};
+
 const isNewIp = () => {
     const oldIpArray = ipDetailsArray.filter(ip => ipArray.includes(ip.ip) )
     return (!!ipDetailsArray && oldIpArray.length !== ipArray.length);
-};
-
-const isDocumentReady = () => {
-    return !ipDetailsArray.length && document.readyState === 'complete';
 };
 
 const isNotReady = () => {
@@ -18,24 +18,22 @@ const isNotReady = () => {
 const GetFlag = (cc) => {
 
     // country code regex
-const CC_REGEX = /^[a-z]{2}$/i;
+    const CC_REGEX = /^[a-z]{2}$/i;
 
-// offset between uppercase ascii and regional indicator symbols
-const OFFSET = 127397;
-
-    
+    // offset between uppercase ascii and regional indicator symbols
+    const OFFSET = 127397;
 
     if (!CC_REGEX.test(cc)) {
         const type = typeof cc;
         throw new TypeError(
-          `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
-            type === 'string' ? cc : type
-          }' instead.`,
+            `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
+                type === 'string' ? cc : type
+            }' instead.`,
         );
-      }
+    }
     
-      const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
-      return String.fromCodePoint(...chars);
+    const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
+    return String.fromCodePoint(...chars);
 }
 
 runDecorator = () => {
