@@ -93,9 +93,8 @@ runDecorator = () => {
                         data => {
                             console.log('response');
                             ipDetailsArray.push(data);
-                            if (index == ipArray.length - 1) {
-                                setTimeout(pageIpDecoration(), 1500);
-                            }
+                            isNewIp && (ipArray = ipDetailsArray.filter(ip => !ipArray.includes(ip.ip)));
+                            setTimeout(pageIpDecoration(), 1500);
                         }
                     );
                 }
