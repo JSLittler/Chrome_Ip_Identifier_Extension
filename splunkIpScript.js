@@ -1,14 +1,6 @@
 let ipArray = [];
 let isDecoratorRunning = false;
 
-const isDocumentReady = () => {
-    return document.readyState === 'complete';
-};
-
-const isNotReady = () => {
-    return document.readyState !== 'complete';
-};
-
 let ipStore = {
     ipStoreArray: [],
     addIpDetailsToStore : (ipDetails) => {
@@ -131,13 +123,13 @@ const decoratingManager = () => {
     isDecoratorRunning = true;
     console.log('in Decorating Manager');
 
-    if (isDocumentReady()) {
+    if (document.readyState === 'complete') {
         console.log('*** runDecorator() is ready or newIp');
         runDecorator();
         return isDecoratorRunning = false;
     }
 
-    if (isNotReady()) {
+    if (document.readyState !== 'complete') {
         console.log('*** runDecorator() is not ready');
         setTimeout(runDecorator, 1500);
         isDecoratorRunning = false;
