@@ -128,7 +128,7 @@ const callback = function(mutationsList, observer) {
     // Use traditional 'for loops' for IE 11
     for(let mutation of mutationsList) {
         // if (mutation.type === 'characterData') {
-            console.log(mutation.type + 'A page element has been changed');
+            console.log('*** ', mutation.type, ' ***', ' A page element has been changed');
             // decoratingManager();
         // }
     }
