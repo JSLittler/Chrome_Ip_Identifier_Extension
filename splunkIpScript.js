@@ -1,6 +1,47 @@
 let ipArray = [];
 let ipDetailsArray = [];
 
+
+
+let ipStore = {
+    ipStoreArray: [],
+    populateIpStoreDetails: (ip) => new Promise ((resolve) => {
+
+        // let getIpFromBestLocationPromise = () => new Promise((resolve) => {
+        //     resolve();
+        // });
+
+
+
+        let ipEntry = ipStore.ipStoreArray.filter((e) => {e.ip == ip})
+        if (ipEntry.length > 0) {
+            resolve();
+        }
+
+        fetch(`https://ipapi.co/${ip}/json/`).then(
+            response => {
+                response.json().then(
+                    data => {
+                        console.log('response');
+                        ipDetailsArray.push(data);
+                        ipStore.addIpDetailsToStore(data);
+
+                        resolve();
+                    });
+            }
+        );
+
+
+        return null;
+    }),
+    addIpDetailsToStore : (ipDetails) => {
+        ipStore.ipStoreArray.push(ipDetails)
+    },
+    getIpDetails : (ip) => {
+        return ipStore.ipStoreArray.filter((e) => {return e.ip == ip})
+    }
+}
+
 const GetFlag = (cc) => {
 
     // country code regex
@@ -53,7 +94,9 @@ runDecorator = () => {
     };
 
     pageIpDecoration = () => {
-        ipDetailsArray.forEach(ipDetails => {
+
+        ipArray.forEach(ip => {
+            let ipDetails = ipStore.getIpDetails(ip);
             const newElement = document.createElement("div")
             newElement.classList = "special-ip"
             newElement.style = "color : green";
@@ -72,19 +115,38 @@ runDecorator = () => {
     };
 
     const buildIpDecoration = () => {
+        let getAllIps = () => new Promise((resolve) => {
+            resolve();
+          });
+        let previousGetAllIps;
         ipArray.forEach((ip, index) => {
-            fetch(`https://ipapi.co/${ip}/json/`).then(
-                response => {
-                    response.json().then(
-                        data => {
-                            console.log('response');
-                            ipDetailsArray.push(data);
-                            if (index == ipArray.length - 1) {
-                                pageIpDecoration();
-                            }
-                        });
+
+
+           let getIpFromBestLocationPromise = () => new Promise((resolve) => {
+                resolve();
+            });
+
+            previousGetAllIps = getAllIps;
+
+            GetAllIps = () => new Promise((resolve) => {
+
+            })
+
+            ipStore.populateIpStoreDetails(ip, ()=>{                            
+                if (index == ipArray.length - 1) {
+                    pageIpDecoration();
                 }
-            );
+            })
+
+            // fillAllPromise = () => new Promise((resolve) => {
+            //     previousFillAllPromise()
+            //       .then(page.fill)
+            //       .then(nextPage)
+            //       // .then(pageDelays.nextPageDelay)
+            //       .then(resolve);
+            //   });
+
+
         });
     };
 
@@ -107,13 +169,9 @@ const decoratingManager = () => window.setInterval(() => {
         return;
     }
 
-    // if (ipArray.length > ipDetailsArray.length) {
-    //     runDecorator();
-    // }
-
     if (document.readyState === 'complete') {
         runDecorator();
     }
-}, 1000);
+}, 5000);
 
 decoratingManager();
