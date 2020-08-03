@@ -2,6 +2,11 @@ let isDecoratorRunning = false;
 let ipArray = [];
 let ipDetailsArray = [];
 
+const isNewIp = () => {
+    const oldIpArray = ipDetailsArray.filter(ip => ipArray.includes(ip.ip) )
+    return oldIpArray.length === ipArray.length;
+}
+
 const GetFlag = (cc) => {
 
     // country code regex
@@ -74,6 +79,10 @@ runDecorator = () => {
 
     const buildIpDecoration = () => {
         ipArray.forEach((ip, index) => {
+            if(ipDetailsArray.includes(ip)) {
+                return;
+            }
+
             fetch(`https://ipapi.co/${ip}/json/`).then(
                 response => {
                     response.json().then(
@@ -83,7 +92,8 @@ runDecorator = () => {
                             if (index == ipArray.length - 1) {
                                 pageIpDecoration();
                             }
-                        });
+                        }
+                    );
                 }
             );
         });
@@ -102,28 +112,26 @@ runDecorator = () => {
     tracePageIps();
 };
 
-const decoratingManager = () => window.setInterval(() => {
+const decoratingManager = () => {
+    isDecoratorRunning = true;
     console.log('in Decorating Manager');
 
-    if (ipDetailsArray.length) {
-        clearInterval(decoratingManager);
-        return;
-    }
-
-    // if (ipArray.length > ipDetailsArray.length) {
-    //     runDecorator();
-    // }
-
-    if (isDecoratorRunning === false) {
-        isDecoratorRunning = true;
+    if (!ipDetailsArray.length && document.readyState === 'complete') {
         console.log('*** runDecorator()');
-        // runDecorator();
+        runDecorator();
+        isDecoratorRunning = false;
+    } else if (!ipDetailsArray.length && document.readyState !== 'complete') {
+        console.log('*** runDecorator()');
+        setTimeout(runDecorator, 1500);
+        isDecoratorRunning = false;
+    } else if (ipDetailsArray.length && isNewIp) {
+        console.log('*** runDecorator()');
+        setTimeout(runDecorator, 1500);
+        isDecoratorRunning = false;
     }
 
-    isDecoratorRunning = false;
-}, 1000);
-
-decoratingManager();
+    
+};
 
 const targetNode = document.body;
 
@@ -134,7 +142,7 @@ const config = { attributes: true, childList: true, subtree: true, characterData
 const callback = function(mutationsList, observer) {
 
     for(let mutation of mutationsList) {
-        if (mutation.type === 'characterData') {
+        if (mutation.type === 'characterData' && !isDecoratorRunning) {
             console.log('*** ', mutation.type, ' ***', ' A page element has been changed');
             decoratingManager();
         }
@@ -146,3 +154,5 @@ const observer = new MutationObserver(callback);
 
 // Start observing the target node for configured mutations
 observer.observe(targetNode, config);
+
+!isDecoratorRunning && decoratingManager();
