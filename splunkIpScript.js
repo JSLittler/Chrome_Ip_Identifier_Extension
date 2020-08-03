@@ -103,6 +103,8 @@ runDecorator = () => {
 };
 
 const decoratingManager = () => window.setInterval(() => {
+    console.log('in Decorating Manager');
+
     if (ipDetailsArray.length) {
         clearInterval(decoratingManager);
         return;
@@ -112,12 +114,16 @@ const decoratingManager = () => window.setInterval(() => {
     //     runDecorator();
     // }
 
-    if (document.readyState === 'complete') {
-        runDecorator();
+    if (isDecoratorRunning === false) {
+        isDecoratorRunning = true;
+        console.log('*** runDecorator()');
+        // runDecorator();
     }
+
+    isDecoratorRunning = false;
 }, 1000);
 
-// decoratingManager();
+decoratingManager();
 
 const targetNode = document.body;
 
@@ -126,12 +132,11 @@ const config = { attributes: true, childList: true, subtree: true, characterData
 
 // Callback function to execute when mutations are observed
 const callback = function(mutationsList, observer) {
-    // Use traditional 'for loops' for IE 11
+
     for(let mutation of mutationsList) {
-        if (mutation.type === 'characterData' && !isDecoratorRunning) {
-            isDecoratorRunning = true;
+        if (mutation.type === 'characterData') {
             console.log('*** ', mutation.type, ' ***', ' A page element has been changed');
-            // decoratingManager();
+            decoratingManager();
         }
     }
 };
