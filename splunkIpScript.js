@@ -128,9 +128,7 @@ const decoratingManager = () => {
         console.log('*** runDecorator()');
         setTimeout(runDecorator, 1500);
         isDecoratorRunning = false;
-    }
-
-    
+    } 
 };
 
 const targetNode = document.body;
@@ -155,4 +153,4 @@ const observer = new MutationObserver(callback);
 // Start observing the target node for configured mutations
 observer.observe(targetNode, config);
 
-!isDecoratorRunning && decoratingManager();
+decoratingManager();
