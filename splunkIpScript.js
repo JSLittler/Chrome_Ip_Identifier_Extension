@@ -101,15 +101,22 @@ runDecorator = () => {
     tracePageIps();
 };
 
-const decoratingManager = () => {
+const decoratingManager = () => window.setInterval(() => {
     if (ipDetailsArray.length) {
+        clearInterval(decoratingManager);
         return;
     }
-    
-    runDecorator();
-};
 
-decoratingManager();
+    // if (ipArray.length > ipDetailsArray.length) {
+    //     runDecorator();
+    // }
+
+    if (document.readyState === 'complete') {
+        runDecorator();
+    }
+}, 1000);
+
+// decoratingManager();
 
 const targetNode = document.body;
 
@@ -120,10 +127,10 @@ const config = { attributes: true, childList: true, subtree: true };
 const callback = function(mutationsList, observer) {
     // Use traditional 'for loops' for IE 11
     for(let mutation of mutationsList) {
-        if (mutation.type === 'subtree') {
-            console.log('A page element has been changed');
-            decoratingManager();
-        }
+        // if (mutation.type === 'characterData') {
+            console.log(mutation.type + 'A page element has been changed');
+            // decoratingManager();
+        // }
     }
 };
 
