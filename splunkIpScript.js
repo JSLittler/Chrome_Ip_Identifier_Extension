@@ -74,8 +74,6 @@ runDecorator = () => {
             newSpan.classList = "extra-ip-city";
             newSpan.innerText = ipDetails.city + " " + GetFlag(ipDetails.country_code);
             newElement.appendChild(newSpan);
-             
-
 
             const thisNode = pageNodes.find(node => node.nodeValue == ipDetails.ip);
 
@@ -96,7 +94,7 @@ runDecorator = () => {
                             console.log('response');
                             ipDetailsArray.push(data);
                             if (index == ipArray.length - 1) {
-                                pageIpDecoration();
+                                setTimeout(pageIpDecoration(), 1500);
                             }
                         }
                     );
@@ -123,13 +121,13 @@ const decoratingManager = () => {
     console.log('in Decorating Manager');
 
     if (isDocumentReady() || isNewIp()) {
-        console.log('*** runDecorator()');
+        console.log('*** runDecorator() is ready or newIp');
         runDecorator();
         return isDecoratorRunning = false;
     }
     
     if (isNotReady()) {
-        console.log('*** runDecorator()');
+        console.log('*** runDecorator() is not ready');
         setTimeout(runDecorator, 1500);
         isDecoratorRunning = false;
     } 
