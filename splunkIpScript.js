@@ -4,8 +4,16 @@ let ipDetailsArray = [];
 
 const isNewIp = () => {
     const oldIpArray = ipDetailsArray.filter(ip => ipArray.includes(ip.ip) )
-    return oldIpArray.length === ipArray.length;
-}
+    return (!!ipDetailsArray && oldIpArray.length !== ipArray.length);
+};
+
+const isDocumentReady = () => {
+    return !ipDetailsArray.length && document.readyState === 'complete';
+};
+
+const isNotReady = () => {
+    return !ipDetailsArray.length && document.readyState !== 'complete';
+};
 
 const GetFlag = (cc) => {
 
@@ -116,15 +124,13 @@ const decoratingManager = () => {
     isDecoratorRunning = true;
     console.log('in Decorating Manager');
 
-    if (!ipDetailsArray.length && document.readyState === 'complete') {
+    if (isDocumentReady() || isNewIp()) {
         console.log('*** runDecorator()');
         runDecorator();
-        isDecoratorRunning = false;
-    } else if (!ipDetailsArray.length && document.readyState !== 'complete') {
-        console.log('*** runDecorator()');
-        setTimeout(runDecorator, 1500);
-        isDecoratorRunning = false;
-    } else if (ipDetailsArray.length && isNewIp) {
+        return isDecoratorRunning = false;
+    }
+    
+    if (isNotReady()) {
         console.log('*** runDecorator()');
         setTimeout(runDecorator, 1500);
         isDecoratorRunning = false;
