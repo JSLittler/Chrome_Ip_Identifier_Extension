@@ -15,10 +15,8 @@ let ipStore = {
 }
 
 const GetFlag = (cc) => {
-    // country code regex
     const CC_REGEX = /^[a-z]{2}$/i;
 
-    // offset between uppercase ascii and regional indicator symbols
     const OFFSET = 127397;
 
     if (!CC_REGEX.test(cc)) {
@@ -88,7 +86,7 @@ runDecorator = () => {
         });
     };
 
-    async function  buildIpDecoration () {
+    const buildIpDecoration = async () => {
         for (let index = 0; index < ipArray.length; index++) {
             const ip = ipArray[index];
  
@@ -120,16 +118,13 @@ runDecorator = () => {
 
 const decoratingManager = () => {
     isDecoratorRunning = true;
-    console.log('in Decorating Manager');
 
     if (document.readyState === 'complete') {
-        console.log('*** runDecorator() is ready or newIp');
         runDecorator();
         return isDecoratorRunning = false;
     }
 
     if (document.readyState !== 'complete') {
-        console.log('*** runDecorator() is not ready');
         setTimeout(runDecorator, 1500);
         isDecoratorRunning = false;
     }
@@ -137,23 +132,18 @@ const decoratingManager = () => {
 
 const targetNode = document.body;
 
-// Options for the observer (which mutations to observe)
 const config = { attributes: true, childList: true, subtree: true, characterData: true };
 
-// Callback function to execute when mutations are observed
-const callback = function(mutationsList, observer) {
+const callback = (mutationsList, observer) => {
     for(let mutation of mutationsList) {
         if (mutation.type === 'characterData' ) {
-            console.log('*** ', mutation.type, ' ***', ' A page element has been changed');
             decoratingManager();
         }
     }
 };
 
-// Create an observer instance linked to the callback function
 const observer = new MutationObserver(callback);
 
-// Start observing the target node for configured mutations
 observer.observe(targetNode, config);
 
 decoratingManager();
