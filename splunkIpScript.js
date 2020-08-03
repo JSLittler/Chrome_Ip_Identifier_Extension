@@ -121,7 +121,7 @@ const decoratingManager = () => window.setInterval(() => {
 const targetNode = document.body;
 
 // Options for the observer (which mutations to observe)
-const config = { attributes: true, childList: true, subtree: true };
+const config = { attributes: true, childList: true, subtree: true, characterData: true };
 
 // Callback function to execute when mutations are observed
 const callback = function(mutationsList, observer) {
