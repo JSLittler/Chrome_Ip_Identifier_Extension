@@ -101,20 +101,13 @@ runDecorator = () => {
     tracePageIps();
 };
 
-const decoratingManager = () => window.setInterval(() => {
+const decoratingManager = () => {
     if (ipDetailsArray.length) {
-        clearInterval(decoratingManager);
         return;
     }
-
-    // if (ipArray.length > ipDetailsArray.length) {
-    //     runDecorator();
-    // }
-
-    if (document.readyState === 'complete') {
-        runDecorator();
-    }
-}, 1000);
+    
+    runDecorator();
+};
 
 decoratingManager();
 
