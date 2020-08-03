@@ -5,13 +5,18 @@ let ipDetailsArray = [];
 
 let ipStore = {
     ipStoreArray: [],
-    populateIpStoreDetails: (ip) => new Promise ((resolve) => {
+    populateIpStoreDetails: (ip2) => {return new Promise ((resolve) => {
 
         // let getIpFromBestLocationPromise = () => new Promise((resolve) => {
         //     resolve();
         // });
 
+        console.log(ip2);
+        console.log('inpromise');
 
+        ip = ip2;
+
+        console.log(ip);
 
         let ipEntry = ipStore.ipStoreArray.filter((e) => {e.ip == ip})
         if (ipEntry.length > 0) {
@@ -23,7 +28,7 @@ let ipStore = {
                 response.json().then(
                     data => {
                         console.log('response');
-                        ipDetailsArray.push(data);
+                        //ipDetailsArray.push(data);
                         ipStore.addIpDetailsToStore(data);
 
                         resolve();
@@ -32,17 +37,21 @@ let ipStore = {
         );
 
 
-        return null;
-    }),
+        
+    })},
     addIpDetailsToStore : (ipDetails) => {
         ipStore.ipStoreArray.push(ipDetails)
     },
     getIpDetails : (ip) => {
         return ipStore.ipStoreArray.filter((e) => {return e.ip == ip})
+    },
+    getAllIpDetails : () => {
+        return ipStore.ipStoreArray;
     }
 }
 
 const GetFlag = (cc) => {
+    console.log(cc);
 
     // country code regex
 const CC_REGEX = /^[a-z]{2}$/i;
@@ -96,7 +105,7 @@ runDecorator = () => {
     pageIpDecoration = () => {
 
         ipArray.forEach(ip => {
-            let ipDetails = ipStore.getIpDetails(ip);
+            let ipDetails = ipStore.getIpDetails(ip)[0];
             const newElement = document.createElement("div")
             newElement.classList = "special-ip"
             newElement.style = "color : green";
@@ -115,28 +124,60 @@ runDecorator = () => {
     };
 
     const buildIpDecoration = () => {
+
+        console.log('inpagedecoration');
         let getAllIps = () => new Promise((resolve) => {
             resolve();
           });
-        let previousGetAllIps;
+        let previousGetAllIps = () => new Promise((resolve) => {
+            resolve();
+          });
+
+
+
         ipArray.forEach((ip, index) => {
 
+            console.log('inloop');
 
-           let getIpFromBestLocationPromise = () => new Promise((resolve) => {
-                resolve();
+
+        //    let getIpFromBestLocationPromise = () => new Promise((resolve) => {
+        //         resolve();
+        //     });
+
+
+
+            // GetAllIps = () => new Promise((resolve) => {
+            //     previousGetAllIps()
+            //     .then(ipStore.getIpDetails.bind({ip : ip}))
+            //     .then(resolve);
+            // });
+
+            // previousGetAllIps = GetAllIps;
+
+            // ipStore.populateIpStoreDetails(ip, ()=>{    
+            
+            GetIp = () => new Promise((resolve) => {
+                ipStore.populateIpStoreDetails(ip)
+                .then(()=> {
+                    if (index == ipArray.length - 1) {
+                        pageIpDecoration()
+                    }
+                })
+                .then(resolve);
             });
+            
+            GetIp();
 
-            previousGetAllIps = getAllIps;
+            // if (index == ipArray.length - 1) {
+            //     FinalGetAllIps = () => new Promise((resolve) => {
+            //         previousGetAllIps()
+            //         .then(() => {pageIpDecoration()})
+            //         .then(resolve);
+            //     })
 
-            GetAllIps = () => new Promise((resolve) => {
-
-            })
-
-            ipStore.populateIpStoreDetails(ip, ()=>{                            
-                if (index == ipArray.length - 1) {
-                    pageIpDecoration();
-                }
-            })
+            //     FinalGetAllIps();
+            // }
+            // });
 
             // fillAllPromise = () => new Promise((resolve) => {
             //     previousFillAllPromise()
@@ -164,7 +205,7 @@ runDecorator = () => {
 };
 
 const decoratingManager = () => window.setInterval(() => {
-    if (ipDetailsArray.length) {
+    if (ipStore.getAllIpDetails().length) {
         clearInterval(decoratingManager);
         return;
     }
