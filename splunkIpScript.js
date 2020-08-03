@@ -5,40 +5,52 @@ let ipDetailsArray = [];
 
 let ipStore = {
     ipStoreArray: [],
-    populateIpStoreDetails: (ip2) => {return new Promise ((resolve) => {
+    populateIpStoreDetails: (ip) => new Promise ((resolve) => {
 
         // let getIpFromBestLocationPromise = () => new Promise((resolve) => {
         //     resolve();
         // });
 
-        console.log(ip2);
+        console.log(ip);
         console.log('inpromise');
 
-        ip = ip2;
+        
 
         console.log(ip);
 
-        let ipEntry = ipStore.ipStoreArray.filter((e) => {e.ip == ip})
-        if (ipEntry.length > 0) {
-            resolve();
+        async function hitApi(ip){
+            let response = await fetch((`https://ipapi.co/${ip}/json/`));
+            let data = await response.json()
+            console.log('hit');
+            //ipStore.addIpDetailsToStore(data);
+            return data;
         }
 
-        fetch(`https://ipapi.co/${ip}/json/`).then(
-            response => {
-                response.json().then(
-                    data => {
-                        console.log('response');
-                        //ipDetailsArray.push(data);
-                        ipStore.addIpDetailsToStore(data);
+        let ipEntry = ipStore.ipStoreArray.filter((e) => {e.ip == ip})
+        if (ipEntry.length > 0) {
+            return;
+        } else {
+            hitApi(ip).then(data => {ipStore.addIpDetailsToStore(data)}); 
+        }
 
-                        resolve();
-                    });
-            }
-        );
+
+
+        // fetch(`https://ipapi.co/${ip}/json/`).then(
+        //     response => {
+        //         response.json().then(
+        //             data => {
+        //                 console.log('response');
+        //                 //ipDetailsArray.push(data);
+        //                 ipStore.addIpDetailsToStore(data);
+
+        //                 resolve();
+        //             });
+        //     }
+        // );
 
 
         
-    })},
+    }),
     addIpDetailsToStore : (ipDetails) => {
         ipStore.ipStoreArray.push(ipDetails)
     },
@@ -123,7 +135,7 @@ runDecorator = () => {
         });
     };
 
-    const buildIpDecoration = () => {
+    async function  buildIpDecoration () {
 
         console.log('inpagedecoration');
         let getAllIps = () => new Promise((resolve) => {
@@ -134,62 +146,100 @@ runDecorator = () => {
           });
 
 
+        for (let index = 0; index < ipArray.length; index++) {
+            const ip = ipArray[index];
 
-        ipArray.forEach((ip, index) => {
+            function hitApi(ip){
 
-            console.log('inloop');
-
-
-        //    let getIpFromBestLocationPromise = () => new Promise((resolve) => {
-        //         resolve();
-        //     });
-
-
-
-            // GetAllIps = () => new Promise((resolve) => {
-            //     previousGetAllIps()
-            //     .then(ipStore.getIpDetails.bind({ip : ip}))
-            //     .then(resolve);
-            // });
-
-            // previousGetAllIps = GetAllIps;
-
-            // ipStore.populateIpStoreDetails(ip, ()=>{    
-            
-            GetIp = () => new Promise((resolve) => {
-                ipStore.populateIpStoreDetails(ip)
-                .then(()=> {
+            }
+    
+            let ipEntry = ipStore.ipStoreArray.filter((e) => {e.ip == ip})
+            if (ipEntry.length > 0) {
+                return;
+            } else {
+                let response = await fetch((`https://ipapi.co/${ip}/json/`));
+                let data = await response.json()
+                console.log('hit');
+                //ipStore.addIpDetailsToStore(data);
+                
+                
+                    ipStore.addIpDetailsToStore(data)
                     if (index == ipArray.length - 1) {
                         pageIpDecoration()
                     }
-                })
-                .then(resolve);
-            });
+                }; 
+            }
+
+
             
-            GetIp();
+        }
+        // ipArray.forEach((ip, index) => {
 
-            // if (index == ipArray.length - 1) {
-            //     FinalGetAllIps = () => new Promise((resolve) => {
-            //         previousGetAllIps()
-            //         .then(() => {pageIpDecoration()})
-            //         .then(resolve);
-            //     })
-
-            //     FinalGetAllIps();
-            // }
-            // });
-
-            // fillAllPromise = () => new Promise((resolve) => {
-            //     previousFillAllPromise()
-            //       .then(page.fill)
-            //       .then(nextPage)
-            //       // .then(pageDelays.nextPageDelay)
-            //       .then(resolve);
-            //   });
+        //     console.log('inloop');
 
 
-        });
-    };
+        // //    let getIpFromBestLocationPromise = () => new Promise((resolve) => {
+        // //         resolve();
+        // //     });
+
+
+
+        //     // GetAllIps = () => new Promise((resolve) => {
+        //     //     previousGetAllIps()
+        //     //     .then(ipStore.getIpDetails.bind({ip : ip}))
+        //     //     .then(resolve);
+        //     // });
+
+        //     // previousGetAllIps = GetAllIps;
+
+        //     // ipStore.populateIpStoreDetails(ip, ()=>{    
+
+
+
+
+
+            
+        //     // GetIp = () => new Promise((resolve) => {
+        //     //     ipStore.populateIpStoreDetails(ip)
+        //     //     .then(()=> {
+        //     //         if (index == ipArray.length - 1) {
+        //     //             pageIpDecoration()
+        //     //         }
+        //     //     })
+        //     //     .then(resolve);
+        //     // });
+            
+        //     // GetIp();
+
+
+
+
+
+
+
+
+        //     // if (index == ipArray.length - 1) {
+        //     //     FinalGetAllIps = () => new Promise((resolve) => {
+        //     //         previousGetAllIps()
+        //     //         .then(() => {pageIpDecoration()})
+        //     //         .then(resolve);
+        //     //     })
+
+        //     //     FinalGetAllIps();
+        //     // }
+        //     // });
+
+        //     // fillAllPromise = () => new Promise((resolve) => {
+        //     //     previousFillAllPromise()
+        //     //       .then(page.fill)
+        //     //       .then(nextPage)
+        //     //       // .then(pageDelays.nextPageDelay)
+        //     //       .then(resolve);
+        //     //   });
+
+
+        // });
+    
 
     const tracePageIps = () => {
         ipArray = getIpsOnPage();
@@ -205,10 +255,10 @@ runDecorator = () => {
 };
 
 const decoratingManager = () => window.setInterval(() => {
-    if (ipStore.getAllIpDetails().length) {
-        clearInterval(decoratingManager);
-        return;
-    }
+    // if (ipStore.getAllIpDetails().length) {
+    //     clearInterval(decoratingManager);
+    //     return;
+    // }
 
     if (document.readyState === 'complete') {
         runDecorator();
