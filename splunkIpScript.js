@@ -2,11 +2,11 @@ let ipArray = [];
 let isDecoratorRunning = false;
 
 const isDocumentReady = () => {
-    return !ipDetailsArray.length && document.readyState === 'complete';
+    return document.readyState === 'complete';
 };
 
 const isNotReady = () => {
-    return !ipDetailsArray.length && document.readyState !== 'complete';
+    return document.readyState !== 'complete';
 };
 
 let ipStore = {
