@@ -122,10 +122,23 @@ runDecorator = () => {
 
         ipArray.forEach(ip => {
 
+
             let ipDetails = ipStore.getIpDetails(ip)[0];
             if (!ipDetails) {
                 return;
             }
+
+            const thisNode = pageNodes.find(node => node.nodeValue == ipDetails.ip);
+
+            console.log(thisNode);
+
+            if (thisNode.parentElement && thisNode.parentElement.className.includes('special-ip')) {
+                return;
+            }
+
+
+
+
             const newElement = document.createElement("div")
             newElement.classList = "special-ip"
             newElement.style = "color : green";
@@ -137,7 +150,7 @@ runDecorator = () => {
              
 
 
-            const thisNode = pageNodes.find(node => node.nodeValue == ipDetails.ip);
+
 
             thisNode.replaceWith(newElement);
         });
@@ -271,12 +284,14 @@ const decoratingManager = () => {
     //     return;
     // }
 
+    console.log('trigger');
+
     if (document.readyState === 'complete') {
         runDecorator();
     }
 };
 
-decoratingManager();
+
 
 
 const targetNode = document.body;
