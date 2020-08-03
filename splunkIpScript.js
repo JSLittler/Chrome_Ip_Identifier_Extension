@@ -98,10 +98,10 @@ runDecorator = () => {
                 let response = await fetch((`https://ipapi.co/${ip}/json/`));
                 let data = await response.json();
                 
-                ipStore.addIpDetailsToStore(data);    
+                ipStore.addIpDetailsToStore(data);                   
             }; 
         }
-
+        
         pageIpDecoration();
     };
 
