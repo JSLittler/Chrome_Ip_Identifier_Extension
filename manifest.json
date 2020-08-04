@@ -1,7 +1,7 @@
 {
-  "name": "Getting Started Example",
+  "name": "CTM IP Tracer",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Enhanced IP details for better debugging and logging experience!",
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "options_page": "options.html",
   "background": {
@@ -18,17 +18,17 @@
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/get_started16.png",
-      "32": "images/get_started32.png",
-      "48": "images/get_started48.png",
-      "128": "images/get_started128.png"
+      "16": "images/CTMIPTRACER_16.png",
+      "32": "images/CTMIPTRACER_32.png",
+      "48": "images/CTMIPTRACER_48.png",
+      "128": "images/CTMIPTRACER_128.png"
     }
   },
   "icons": {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
+    "16": "images/CTMIPTRACER_16.png",
+    "32": "images/CTMIPTRACER_32.png",
+    "48": "images/CTMIPTRACER_48.png",
+    "128": "images/CTMIPTRACER_128.png"
   },
   "manifest_version": 2
 }
