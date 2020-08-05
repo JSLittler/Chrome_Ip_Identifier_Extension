@@ -1,46 +1,48 @@
 let ipArray = [];
 let isDecoratorRunning = false;
 
-let ipStore = {
-    ipStoreArray: [],
-    addIpDetailsToStore : (ipDetails) => {
-        ipStore.ipStoreArray.push(ipDetails)
-        window.localStorage.setItem('ipStorage', JSON.stringify(ipStore.ipStoreArray) )
-    },
-    getIpDetails : (ip) => {
-        return ipStore.ipStoreArray.filter((e) => {return e.ip == ip})
-    },
-    getAllIpDetails : () => {
-        return ipStore.ipStoreArray;
-    },
-    setupStoreArray : () => {
-        let fromStorage = window.localStorage.getItem('ipStorage');
-        if(fromStorage){
-            fromStorage = JSON.parse(fromStorage);
-            ipStore.ipStoreArray = fromStorage;
-        }
-    }
-}
 
-const GetFlag = (cc) => {
-    const CC_REGEX = /^[a-z]{2}$/i;
-
-    const OFFSET = 127397;
-
-    if (!CC_REGEX.test(cc)) {
-        const type = typeof cc;
-        throw new TypeError(
-          `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
-            type === 'string' ? cc : type
-          }' instead.`,
-        );
-    }
-    
-    const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
-    return String.fromCodePoint(...chars);
-}
 
 runDecorator = () => {
+    let ipStore = {
+        ipStoreArray: [],
+        addIpDetailsToStore : (ipDetails) => {
+            ipStore.ipStoreArray.push(ipDetails)
+            window.localStorage.setItem('ipStorage', JSON.stringify(ipStore.ipStoreArray) )
+        },
+        getIpDetails : (ip) => {
+            return ipStore.ipStoreArray.filter((e) => {return e.ip == ip})
+        },
+        getAllIpDetails : () => {
+            return ipStore.ipStoreArray;
+        },
+        setupStoreArray : () => {
+            let fromStorage = window.localStorage.getItem('ipStorage');
+            if(fromStorage){
+                fromStorage = JSON.parse(fromStorage);
+                ipStore.ipStoreArray = fromStorage;
+            }
+        }
+    }
+    
+    const GetFlag = (cc) => {
+        const CC_REGEX = /^[a-z]{2}$/i;
+    
+        const OFFSET = 127397;
+    
+        if (!CC_REGEX.test(cc)) {
+            const type = typeof cc;
+            throw new TypeError(
+              `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
+                type === 'string' ? cc : type
+              }' instead.`,
+            );
+        }
+        
+        const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
+        return String.fromCodePoint(...chars);
+    }
+
     let pageNodes = [...document.body.childNodes];
 
     const getChildNodes = (node) => {
@@ -112,6 +114,7 @@ runDecorator = () => {
     };
 
     const tracePageIps = () => {
+        ipStore.setupStoreArray();
         ipArray = getIpsOnPage();
 
         if (ipArray.length < 1) {
@@ -150,7 +153,7 @@ const callback = (mutationsList, observer) => {
     }
 };
 
-ipStore.setupStoreArray();
+
 
 const observer = new MutationObserver(callback);
 
