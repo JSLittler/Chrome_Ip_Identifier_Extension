@@ -20,6 +20,7 @@
     "background.js",
     "popup.html",
     "popup.js",
+    "runDecorator.js",
     "splunkIpScript.js"
  ],
   "page_action": {
