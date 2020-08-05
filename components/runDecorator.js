@@ -1,3 +1,5 @@
+import getFlag from './getFlag.js';
+
 const runDecorator = () => {
   let ipArray = [];
   let ipStore = {
@@ -19,24 +21,6 @@ const runDecorator = () => {
               ipStore.ipStoreArray = fromStorage;
           }
       }
-  }
-  
-  const GetFlag = (cc) => {
-      const CC_REGEX = /^[a-z]{2}$/i;
-  
-      const OFFSET = 127397;
-  
-      if (!CC_REGEX.test(cc)) {
-          const type = typeof cc;
-          throw new TypeError(
-            `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
-              type === 'string' ? cc : type
-            }' instead.`,
-          );
-      }
-      
-      const chars = [...cc.toUpperCase()].map(c => c.charCodeAt() + OFFSET);
-      return String.fromCodePoint(...chars);
   }
 
   let pageNodes = [...document.body.childNodes];
@@ -85,7 +69,7 @@ const runDecorator = () => {
           newElement.innerText = ipDetails.ip;
           const newSpan = document.createElement("div");
           newSpan.classList = "extra-ip-city";
-          newSpan.innerText = ipDetails.city + " " + GetFlag(ipDetails.country_code);
+          newSpan.innerText = ipDetails.city + " " + getFlag(ipDetails.country_code);
           newElement.appendChild(newSpan);
 
           thisNode.replaceWith(newElement);

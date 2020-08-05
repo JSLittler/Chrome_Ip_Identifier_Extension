@@ -18,10 +18,11 @@
   "web_accessible_resources": [
     "background.html",
     "background.js",
+    "components/getFlag.js",
+    "components/runDecorator.js",
     "main.js",
     "popup.html",
-    "popup.js",
-    "runDecorator.js"
+    "popup.js"
  ],
   "page_action": {
     "default_popup": "popup.html",

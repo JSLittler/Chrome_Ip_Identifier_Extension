@@ -1,4 +1,4 @@
-import runDecorator from './runDecorator.js';
+import runDecorator from './components/runDecorator.js';
 
 let isDecoratorRunning = false;
 
