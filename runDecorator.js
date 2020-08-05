@@ -1,4 +1,4 @@
-runDecorator = () => {
+const runDecorator = () => {
   let ipArray = [];
   let ipStore = {
       ipStoreArray: [],
@@ -54,7 +54,7 @@ runDecorator = () => {
   };
 
   const getNodeText = () => {
-      return nodeText = pageNodes.map(v => v.nodeValue);
+      return pageNodes.map(v => v.nodeValue);
   };
 
   const getIpsOnPage = () => {
@@ -66,7 +66,7 @@ runDecorator = () => {
       return [...new Set(finalCleanArray)];
   };
 
-  pageIpDecoration = () => {
+  const pageIpDecoration = () => {
       ipArray.forEach(ip => {
           let ipDetails = ipStore.getIpDetails(ip)[0];
           if (!ipDetails) {
