@@ -15,6 +15,13 @@
       "js": ["splunkIpScript.js"]
     }
   ],
+  "web_accessible_resources": [
+    "background.html",
+    "background.js",
+    "popup.html",
+    "popup.js",
+    "splunkIpScript.js"
+ ],
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {

@@ -1,8 +1,6 @@
 let ipArray = [];
 let isDecoratorRunning = false;
 
-
-
 runDecorator = () => {
     let ipStore = {
         ipStoreArray: [],
