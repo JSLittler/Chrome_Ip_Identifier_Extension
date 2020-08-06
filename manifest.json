@@ -18,8 +18,13 @@
   "web_accessible_resources": [
     "background.js",
     "components/decoratingManager.js",
+    "components/getChildNodes.js",
     "components/getFlag.js",
+    "components/getIpsOnPage.js",
+    "components/getNodeText.js",
+    "components/ipStore.js",
     "components/observerCallback.js",
+    "components/populatePageNodes.js",
     "components/runDecorator.js",
     "main.js",
     "popup.html",
