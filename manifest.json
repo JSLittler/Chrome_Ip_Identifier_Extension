@@ -16,7 +16,6 @@
     }
   ],
   "web_accessible_resources": [
-    "background.html",
     "background.js",
     "components/decoratingManager.js",
     "components/getFlag.js",
