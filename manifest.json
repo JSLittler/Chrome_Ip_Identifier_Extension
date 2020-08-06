@@ -18,7 +18,9 @@
   "web_accessible_resources": [
     "background.html",
     "background.js",
+    "components/decoratingManager.js",
     "components/getFlag.js",
+    "components/observerCallback.js",
     "components/runDecorator.js",
     "main.js",
     "popup.html",
