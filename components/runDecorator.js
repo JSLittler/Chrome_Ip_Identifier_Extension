@@ -1,11 +1,33 @@
-import getFlag from './getFlag.js';
-import ipStore from './ipStore.js';
 import populatePageNodes from './populatePageNodes.js';
 import getIpsOnPage from './getIpsOnPage.js';
+import createIpElement from './createIpElement.js';
 
 const runDecorator = () => {
   let ipArray = [];
   let pageNodes = [...document.body.childNodes];
+  let ipStore = {
+    ipStoreArray: [],
+    addIpDetailsToStore : (ipDetails) => {
+        ipStore.ipStoreArray.push(ipDetails);
+        window.localStorage.setItem('ipStorage', JSON.stringify(ipStore.ipStoreArray) );
+    },
+    getIpDetails : (ip) => {
+        console.log('Ip', ip);
+        console.log('ipStoreArray', ipStore.ipStoreArray);
+        console.log('matchedIp', ipStore.ipStoreArray.filter((e) => {return e.ip == ip}));
+        return ipStore.ipStoreArray.filter((e) => {return e.ip == ip})
+    },
+    getAllIpDetails : () => {
+        return ipStore.ipStoreArray;
+    },
+    setupStoreArray : () => {
+        let fromStorage = window.localStorage.getItem('ipStorage');
+        if(fromStorage){
+            fromStorage = JSON.parse(fromStorage);
+            ipStore.ipStoreArray = fromStorage;
+        }
+    }
+  };
 
   const pageIpDecoration = () => {
       ipArray.forEach(ip => {
@@ -20,14 +42,7 @@ const runDecorator = () => {
               return;
           }
 
-          const newElement = document.createElement("div")
-          newElement.classList = "special-ip"
-          newElement.style = "color : green";
-          newElement.innerText = ipDetails.ip;
-          const newSpan = document.createElement("div");
-          newSpan.classList = "extra-ip-city";
-          newSpan.innerText = ipDetails.city + " " + getFlag(ipDetails.country_code);
-          newElement.appendChild(newSpan);
+          const newElement = createIpElement(ipDetails);
 
           thisNode.replaceWith(newElement);
       });
@@ -46,20 +61,19 @@ const runDecorator = () => {
               ipStore.addIpDetailsToStore(data);                   
           }; 
       }
-      
-      pageIpDecoration();
   };
 
   const tracePageIps = () => {
       ipStore.setupStoreArray();
       pageNodes = populatePageNodes(pageNodes);
       ipArray = getIpsOnPage(pageNodes);
+      buildIpDecoration();
 
       if (ipArray.length < 1) {
           return;
       }
-
-      buildIpDecoration();
+      
+      pageIpDecoration();
   };
 
   tracePageIps();

@@ -17,6 +17,7 @@
   ],
   "web_accessible_resources": [
     "background.js",
+    "components/createIpElement.js",
     "components/decoratingManager.js",
     "components/getChildNodes.js",
     "components/getFlag.js",
