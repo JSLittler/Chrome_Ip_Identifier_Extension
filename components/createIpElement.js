@@ -1,7 +1,6 @@
 import getFlag from './getFlag.js';
 
 const createIpElement = (ipDetails) => {
-  console.log(ipDetails);
   const newElement = document.createElement("div")
 
   newElement.classList = "special-ip"

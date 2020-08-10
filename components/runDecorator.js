@@ -1,11 +1,12 @@
 import populatePageNodes from './populatePageNodes.js';
 import getIpsOnPage from './getIpsOnPage.js';
+import fetchIpDetails from './fetchIpDetails.js';
 import pageIpDecoration from './pageIpDecoration.js';
 
 const runDecorator = () => {
-  let ipArray = [];
-  let pageNodes = [...document.body.childNodes];
-  let ipStore = {
+    let ipArray = [];
+    let pageNodes = [...document.body.childNodes];
+    let ipStore = {
     ipStoreArray: [],
     addIpDetailsToStore : (ipDetails) => {
         ipStore.ipStoreArray.push(ipDetails);
@@ -24,38 +25,25 @@ const runDecorator = () => {
             ipStore.ipStoreArray = fromStorage;
         }
     }
-  };
+};
 
-  const buildIpDecoration = async () => {
-      for (let index = 0; index < ipArray.length; index++) {
-          const ip = ipArray[index];
+    const decoratePage = async () => {
+        ipStore.setupStoreArray();
+        pageNodes = await populatePageNodes(pageNodes);
+        ipArray = await getIpsOnPage(pageNodes);
+        let allIpDetails = ipStore.getAllIpDetails();
+        let ipDetailsArray = await fetchIpDetails(ipArray, allIpDetails);
+        ipDetailsArray.map(ipD => ipStore.addIpDetailsToStore(ipD));
 
-          if (!!ipStore.getIpDetails(ip).length) {
-              continue;
-          } else {
-              let response = await fetch((`https://ipapi.co/${ip}/json/`));
-              let data = await response.json()
-              
-              ipStore.addIpDetailsToStore(data);                 
-          }; 
-      }
-  };
+        if (ipArray.length < 1) {
+            return;
+        }
+        
+        allIpDetails = ipStore.getAllIpDetails();
+        pageIpDecoration(ipArray, allIpDetails, pageNodes);
+    };
 
-  const tracePageIps = async () => {
-      ipStore.setupStoreArray();
-      pageNodes = await populatePageNodes(pageNodes);
-      ipArray = await getIpsOnPage(pageNodes);
-      await buildIpDecoration();
-
-      if (ipArray.length < 1) {
-          return;
-      }
-      
-      let allIpDetails = ipStore.getAllIpDetails();
-      pageIpDecoration(ipArray, allIpDetails, pageNodes);
-  };
-
-  tracePageIps();
+    decoratePage();
 };
 
 export default runDecorator;

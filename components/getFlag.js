@@ -1,5 +1,4 @@
 const getFlag = (cc) => {
-  console.log('getflag', cc)
   const CC_REGEX = /^[a-z]{2}$/i;
 
   const OFFSET = 127397;
