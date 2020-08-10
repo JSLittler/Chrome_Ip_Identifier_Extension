@@ -12,9 +12,6 @@ const runDecorator = () => {
         window.localStorage.setItem('ipStorage', JSON.stringify(ipStore.ipStoreArray) );
     },
     getIpDetails : (ip) => {
-        console.log('Ip', ip);
-        console.log('ipStoreArray', ipStore.ipStoreArray);
-        console.log('matchedIp', ipStore.ipStoreArray.filter((e) => {return e.ip == ip}));
         return ipStore.ipStoreArray.filter((e) => {return e.ip == ip})
     },
     getAllIpDetails : () => {
@@ -56,18 +53,18 @@ const runDecorator = () => {
               continue;
           } else {
               let response = await fetch((`https://ipapi.co/${ip}/json/`));
-              let data = await response.json();
+              let data = await response.json()
               
-              ipStore.addIpDetailsToStore(data);                   
+              ipStore.addIpDetailsToStore(data);                 
           }; 
       }
   };
 
-  const tracePageIps = () => {
+  const tracePageIps = async () => {
       ipStore.setupStoreArray();
-      pageNodes = populatePageNodes(pageNodes);
-      ipArray = getIpsOnPage(pageNodes);
-      buildIpDecoration();
+      pageNodes = await populatePageNodes(pageNodes);
+      ipArray = await getIpsOnPage(pageNodes);
+      await buildIpDecoration();
 
       if (ipArray.length < 1) {
           return;
