@@ -1,6 +1,6 @@
 import populatePageNodes from './populatePageNodes.js';
 import getIpsOnPage from './getIpsOnPage.js';
-import createIpElement from './createIpElement.js';
+import pageIpDecoration from './pageIpDecoration.js';
 
 const runDecorator = () => {
   let ipArray = [];
@@ -24,25 +24,6 @@ const runDecorator = () => {
             ipStore.ipStoreArray = fromStorage;
         }
     }
-  };
-
-  const pageIpDecoration = () => {
-      ipArray.forEach(ip => {
-          let ipDetails = ipStore.getIpDetails(ip)[0];
-          if (!ipDetails) {
-              return;
-          }
-
-          const thisNode = pageNodes.find(node => node.nodeValue == ipDetails.ip);
-
-          if (thisNode.parentElement && thisNode.parentElement.className.includes('special-ip')) {
-              return;
-          }
-
-          const newElement = createIpElement(ipDetails);
-
-          thisNode.replaceWith(newElement);
-      });
   };
 
   const buildIpDecoration = async () => {
@@ -70,7 +51,8 @@ const runDecorator = () => {
           return;
       }
       
-      pageIpDecoration();
+      let allIpDetails = ipStore.getAllIpDetails();
+      pageIpDecoration(ipArray, allIpDetails, pageNodes);
   };
 
   tracePageIps();

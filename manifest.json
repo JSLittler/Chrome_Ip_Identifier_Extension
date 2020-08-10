@@ -25,6 +25,7 @@
     "components/getNodeText.js",
     "components/ipStore.js",
     "components/observerCallback.js",
+    "components/pageIpDecoration.js",
     "components/populatePageNodes.js",
     "components/runDecorator.js",
     "main.js",
