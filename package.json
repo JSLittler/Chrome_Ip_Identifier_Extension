@@ -1,0 +1,32 @@
+{
+  "name": "chrome_ip_identifier_extension",
+  "version": "1.0.0",
+  "description": "IP Address details for chrome (node used for build tools)",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSLittler/Chrome_Ip_Identifier_Extension.git"
+  },
+  "author": "JSLittler KarlNewark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JSLittler/Chrome_Ip_Identifier_Extension/issues"
+  },
+  "homepage": "https://github.com/JSLittler/Chrome_Ip_Identifier_Extension#readme",
+  "dependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "jasmine": "^3.6.1",
+    "jsdom": "^16.4.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "jest": "^26.4.0"
+  }
+}
