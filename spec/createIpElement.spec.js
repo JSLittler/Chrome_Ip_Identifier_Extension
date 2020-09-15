@@ -8,7 +8,7 @@ const ipDetails = {
 
 describe("Testing DOM element", function() {
     const ipElement = createIpElement(ipDetails);
-    console.log(ipElement.children[0]);
+    
     it("contains correct IP", function() {
         expect(ipElement.innerText).toBe("111.111.111.111");
     }); 
