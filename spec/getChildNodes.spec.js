@@ -1,8 +1,8 @@
 import getChildNodes from '../components/getChildNodes.js';
 
 describe("Testing DOM element", () => {
-  let testDiv = global.document.createElement('div');
-  const testChildDiv = global.document.createElement('div');
+  let testDiv = document.createElement('div');
+  const testChildDiv = document.createElement('div');
   testChildDiv.innerText = "111.111.111.111";
   testDiv.appendChild(testChildDiv);
 
@@ -12,7 +12,7 @@ describe("Testing DOM element", () => {
   });
 
   it("finds multiple child nodes", () => {
-    const childDivTwo = global.document.createElement('div');
+    const childDivTwo = document.createElement('div');
     childDivTwo.innerText = "222.222.222.222"
     testDiv.appendChild(childDivTwo);
     expect(getChildNodes(testDiv).length).toEqual(2);
@@ -20,7 +20,7 @@ describe("Testing DOM element", () => {
   });
 
   it("returns empty array if no children present", () => {
-    testDiv = global.document.createElement('div');
+    testDiv = document.createElement('div');
     expect(getChildNodes(testDiv).length).toEqual(0);
   });
 });
