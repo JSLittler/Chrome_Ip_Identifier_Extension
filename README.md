@@ -15,7 +15,7 @@
 ### A new extension will appear on the page called CTM IP Tracer, ensure this is toggled on on the bottom right hand side of the panel.
 
 ## To Test
-### Some versions of node are not compatible with the jest configuration and modulisation of this project. Development took place using node version 14.10.1, and this is recommended.
+### Some versions of node are not compatible with the jest configuration and modulisation of this project. Development took place using node version 12.18.4, and this is recommended.
 ### In your terminal, navigate to the root of the project and run 'npm test'.
 
 ## Todo

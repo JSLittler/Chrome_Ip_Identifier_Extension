@@ -4,7 +4,7 @@ const pageIpDecoration = (ipArray, allIpDetails, pageNodes) => {
   ipArray.forEach(ip => {
       let ipDetails = allIpDetails.filter((e) => {return e.ip == ip});
 
-      if (!ipDetails) {
+      if (!ipDetails.length) {
           return;
       }
 
