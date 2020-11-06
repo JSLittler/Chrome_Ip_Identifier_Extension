@@ -1,26 +1,11 @@
-import jsdom from 'jsdom';
+import setupMockDocument from './setupMockDocument.js';
 import pageIpDecoration from '../components/pageIpDecoration.js';
 
 describe("pageIpDecoration", () => {
-  const { JSDOM } = jsdom;  
-  const doc = (new JSDOM('<html><body><div id="Test-Div">111.111.111.111</div></body></html>')).window.document;
+  setupMockDocument();
 
-  Object.defineProperty(window, 'document', {
-    writable: true,
-    value: doc,
-  });
-  
-  console.log(document.getElementById('Test-Div').innerHTML);
-  const ipArray = ["111.111.111.111"];
-
-  const ipDetails = {
-    ip : "111.111.111.111",
-    city: "ExampleCity",
-    country_code: "GB"
-  }
-
-  const testDivTwo = document.createElement('div');
-  testDivTwo.id = "Test-Div-Two";
+  const testDiv = document.createElement('div');
+  testDiv.id = "Test-Div";
 
   const testPageNodesOne = global.window.document.createTextNode("111.111.111.111");
   testPageNodesOne.id = 'Test-Node-One';
@@ -28,23 +13,30 @@ describe("pageIpDecoration", () => {
   const testPageNodesTwo = global.window.document.createTextNode("non ip related text");
   testPageNodesTwo.id = 'Test-Node-Two';
 
-  testDivTwo.appendChild(testPageNodesOne);
-  testDivTwo.appendChild(testPageNodesTwo);
-  document.body.appendChild(testDivTwo);
+  testDiv.appendChild(testPageNodesOne);
+  testDiv.appendChild(testPageNodesTwo);
+  document.body.appendChild(testDiv);
 
-  console.log(document.getElementById('Test-Div-Two').innerHTML);
+  const ipArray = ["111.111.111.111"];
+
+  const ipDetails = [{
+    ip : "111.111.111.111",
+    city: "ExampleCity",
+    country_code: "GB"
+  },];
 
   const nodeArray = [testPageNodesOne, testPageNodesTwo];
 
-  it("should replace a text node with an ip address", () => {
-    const oldElement = document.getElementById('Test-Div-Two').innerHTML;
-    console.log('oldElement', oldElement);
+  it("should replace old text node with a new re-formatted node without altering non ip text", () => {
+    const oldElement = document.getElementById('Test-Div').innerHTML;
 
-    pageIpDecoration(ipArray, [ipDetails], nodeArray);
+    pageIpDecoration(ipArray, ipDetails, nodeArray);
 
-    const newElement = document.getElementById('Test-Div-Two').innerHTML;
-    console.log('newElement', newElement);
+    const newElement = document.getElementById('Test-Div').innerHTML;
 
     expect(newElement).not.toEqual(oldElement);
+    expect(newElement.includes("111.111.111.111")).toBe(true);
+    expect(newElement.includes("ExampleCity")).toBe(true);
+    expect(newElement.includes("non ip related text")).toBe(true);
   });
 });
