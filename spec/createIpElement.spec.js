@@ -10,11 +10,11 @@ describe("Testing DOM element", () => {
     const ipElement = createIpElement(ipDetails);
 
     it("contains correct IP", () => {
-        expect(ipElement.innerText).toBe("111.111.111.111");
+        expect(ipElement.innerHTML.includes("111.111.111.111")).toBe(true);
     }); 
 
     it("contains correct City", () => {
-        expect(ipElement.children[0].innerText).toBe("ExampleCity 🇬🇧");
+        expect(ipElement.children[0].innerHTML).toBe("ExampleCity 🇬🇧");
     }); 
 });
 

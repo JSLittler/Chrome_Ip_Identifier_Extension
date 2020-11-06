@@ -2,7 +2,7 @@ import createIpElement from './createIpElement.js';
 
 const pageIpDecoration = (ipArray, allIpDetails, pageNodes) => {
   ipArray.forEach(ip => {
-      let ipDetails = allIpDetails.filter((e) => {return e.ip == ip});
+      let ipDetails = allIpDetails.filter((e) => { return e.ip === ip });
 
       if (!ipDetails.length) {
           return;
