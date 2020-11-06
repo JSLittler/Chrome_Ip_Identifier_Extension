@@ -1,7 +1,6 @@
 import runDecorator from './runDecorator.js';
 
 const decoratingManager = () => {
-
     if (document.readyState === 'complete') {
         runDecorator();
         return;

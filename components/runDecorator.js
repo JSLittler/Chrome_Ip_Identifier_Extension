@@ -33,7 +33,7 @@ const runDecorator = () => {
         ipArray = await getIpsOnPage(pageNodes);
         let allIpDetails = ipStore.getAllIpDetails();
         let ipDetailsArray = await fetchIpDetails(ipArray, allIpDetails);
-        ipDetailsArray.map(ipD => ipStore.addIpDetailsToStore(ipD));
+        ipDetailsArray.forEach(ipD => ipStore.addIpDetailsToStore(ipD));
 
         if (ipArray.length < 1) {
             return;
