@@ -1,14 +1,7 @@
 import runDecorator from './runDecorator.js';
 
-const decoratingManager = () => {
-    if (document.readyState === 'complete') {
-        runDecorator();
-        return;
-    }
-
-    if (document.readyState !== 'complete') {
-        setTimeout(runDecorator, 1500);
-    }
+const decoratingManager = async () => {
+    await setTimeout(runDecorator, 10000);
 };
 
 export default decoratingManager;

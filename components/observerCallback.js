@@ -2,11 +2,11 @@ import decoratingManager from './decoratingManager.js';
 
 const config = { attributes: true, childList: true, subtree: true, characterData: true };
 
-const observerCallback = (mutationsList, observer) => {
+const observerCallback = async (mutationsList, observer) => {
   for(let mutation of mutationsList) {
       if (mutation.type === 'childList') {
           console.log('a change happened', mutation);
-          decoratingManager();
+          await setTimeout(decoratingManager, 3000);
           observer.disconnect();
       }
   }

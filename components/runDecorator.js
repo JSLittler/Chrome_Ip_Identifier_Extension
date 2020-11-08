@@ -20,9 +20,8 @@ const runDecorator = () => {
         },
         setupStoreArray : () => {
             let fromStorage = window.localStorage.getItem('ipStorage');
-            if(fromStorage){
-                fromStorage = JSON.parse(fromStorage);
-                ipStore.ipStoreArray = fromStorage;
+            if(!!fromStorage){
+                ipStore.ipStoreArray = JSON.parse(fromStorage);
             }
         }
     }; 
@@ -33,17 +32,19 @@ const runDecorator = () => {
         ipArray = await getIpsOnPage(pageNodes);
         let allIpDetails = ipStore.getAllIpDetails();
         let ipDetailsArray = await fetchIpDetails(ipArray, allIpDetails);
-        ipDetailsArray.forEach(ipD => ipStore.addIpDetailsToStore(ipD));
+        await ipDetailsArray.forEach(ipD => ipStore.addIpDetailsToStore(ipD));
 
         if (ipArray.length < 1) {
             return;
         }
         
         allIpDetails = ipStore.getAllIpDetails();
-        pageIpDecoration(ipArray, allIpDetails, pageNodes);
+        await pageIpDecoration(ipArray, allIpDetails, pageNodes);
+        return;
     };
 
     decoratePage();
+    return;
 };
 
 export default runDecorator;
