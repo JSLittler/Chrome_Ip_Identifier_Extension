@@ -13,6 +13,7 @@
 ### click on 'load unpacked' button on top right hand side of the screen
 ### select 'Chrome_Ip_Identifier_Extension
 ### A new extension will appear on the page called CTM IP Tracer, ensure this is toggled on on the bottom right hand side of the panel.
+### Click the button on the top corner of splunk.
 
 ## To Test
 ### Some versions of node are not compatible with the jest configuration and modulisation of this project. Development took place using node version 12.18.4, and this is recommended.
@@ -20,8 +21,5 @@
 
 ## Todo
 ### 4. Display information on hover
-### 5. Add meerkat icon for ctm listed ips
-### 6. Fix first time loading issue on page nav
-### 7. Fix issues with mutation observer - set up before decorator, and issue running ips after decorator has run
-### 8. Add testing
+### 5. Add meerkat icon for ctm listed ips and button
 ### 9. Update readme
