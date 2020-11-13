@@ -29,8 +29,8 @@ const runDecorator = () => {
 
     const decoratePage = async () => {
         ipStore.setupStoreArray();
-        pageNodes = await populatePageNodes(pageNodes);
-        ipArray = await getIpsOnPage(pageNodes);
+        pageNodes = populatePageNodes(pageNodes);
+        ipArray = getIpsOnPage(pageNodes);
         let allIpDetails = ipStore.getAllIpDetails();
         let ipDetailsArray = await fetchIpDetails(ipArray, allIpDetails);
         ipDetailsArray.map(ipD => ipStore.addIpDetailsToStore(ipD));
