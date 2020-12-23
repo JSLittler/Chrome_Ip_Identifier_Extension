@@ -4,7 +4,7 @@ const createIpElement = (ipDetails) => {
   const newElement = document.createElement("div");
 
   newElement.classList = "special-ip";
-  newElement.style = "color : green";
+  newElement.style.color = "green";
   newElement.innerHTML = ipDetails.ip;
 
   const newSpan = document.createElement("div");
@@ -12,6 +12,7 @@ const createIpElement = (ipDetails) => {
   newSpan.classList = "extra-ip-city";
   const cityEl = document.createElement("p");
   cityEl.innerHTML = `City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`;
+  cityEl.style.color = "green";
   newSpan.appendChild(cityEl);
 
   const toolTip = document.createElement("div");
@@ -34,11 +35,12 @@ const createIpElement = (ipDetails) => {
     // highlight the mouseenter target
     event.target.style.color = "purple";
     newSpan.appendChild(toolTip);
-  
-    // reset the color after a short delay
-    setTimeout(function() {
-      event.target.style.color = "";
-    }, 500);
+  }, false);
+
+  newElement.addEventListener("mouseleave", function( event ) {   
+    // highlight the mouseenter target
+    event.target.style.color = "green";
+    newSpan.removeChild(toolTip);
   }, false);
 
   newElement.appendChild(newSpan);
