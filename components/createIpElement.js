@@ -32,14 +32,12 @@ const createIpElement = (ipDetails) => {
 
   newElement.appendChild(newSpan);
 
-  newElement.addEventListener("mouseenter", function( event ) {   
-    // highlight the mouseenter target
+  newElement.addEventListener("mouseenter", function( event ) {
     event.target.style.color = "purple";
     newSpan.appendChild(toolTip);
   }, false);
 
-  newElement.addEventListener("mouseleave", function( event ) {   
-    // highlight the mouseenter target
+  newElement.addEventListener("mouseleave", function( event ) {
     event.target.style.color = "green";
     newSpan.removeChild(toolTip);
   }, false);
