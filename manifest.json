@@ -18,6 +18,7 @@
   "web_accessible_resources": [
     "background.js",
     "components/createIpElement.js",
+    "components/createParagraph.js",
     "components/fetchIpDetails.js",
     "components/getChildNodes.js",
     "components/getFlag.js",
