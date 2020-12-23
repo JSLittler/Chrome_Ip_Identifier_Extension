@@ -36,7 +36,6 @@ describe("pageIpDecoration", () => {
 
     expect(newElement).not.toEqual(oldElement);
     expect(newElement.includes("111.111.111.111")).toBe(true);
-    expect(newElement.includes("ExampleCity")).toBe(true);
     expect(newElement.includes("non ip related text")).toBe(true);
   });
 });

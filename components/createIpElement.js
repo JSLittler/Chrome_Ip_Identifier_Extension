@@ -1,39 +1,41 @@
 import getFlag from './getFlag.js';
+import createParagraph from './createParagraph.js';
 
 const createIpElement = (ipDetails) => {
-  const newElement = document.createElement("div")
+  const newElement = document.createElement("div");
 
-  newElement.classList = "special-ip"
-  newElement.style = "color : green";
+  newElement.classList = "special-ip";
+  newElement.style.color = "green";
   newElement.innerHTML = ipDetails.ip;
 
   const newSpan = document.createElement("div");
 
-  newSpan.classList = "extra-ip-city";
-  newSpan.innerHTML = ipDetails.city + " " + getFlag(ipDetails.country_code);
+  const city = createParagraph(`City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`);
+  newSpan.appendChild(city);
+
+  const toolTip = document.createElement("div");
+
+  const region = createParagraph(`Region: ${ipDetails.region}`);
+  const country = createParagraph(`Country: ${ipDetails.country_name}`);
+
+  toolTip.appendChild(region);
+  toolTip.appendChild(country);
+
   newElement.appendChild(newSpan);
 
-  var toolTipString = '    <div class="ip-tooltip"> ' +
-  '<p>Washington, United States 🇺🇸</p>' +
-  '<p>Google</p>' +
-  '</div>'
-
-  var parser = new window.DOMParser();
-  var toolTip = parser.parseFromString(toolTipString, "text/html")
-
-  newElement.addEventListener("mouseenter", function( event ) {   
-    // highlight the mouseenter target
+  newElement.addEventListener("mouseenter", function( event ) {
     event.target.style.color = "purple";
-    document.body.appendChild(toolTip);
-  
-    // reset the color after a short delay
-    setTimeout(function() {
-      event.target.style.color = "";
-    }, 500);
+    newSpan.appendChild(toolTip);
   }, false);
 
-  return newElement;
+  newElement.addEventListener("mouseleave", function( event ) {
+    event.target.style.color = "green";
+    newSpan.removeChild(toolTip);
+  }, false);
 
+  newElement.appendChild(newSpan);
+
+  return newElement;
 };
 
 export default createIpElement;

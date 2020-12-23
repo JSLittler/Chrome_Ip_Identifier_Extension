@@ -14,7 +14,7 @@ describe("Testing DOM element", () => {
     }); 
 
     it("contains correct City", () => {
-        expect(ipElement.children[0].innerHTML).toBe("ExampleCity 🇬🇧");
+        expect(ipElement.children[0].childNodes[0].innerText.includes("ExampleCity 🇬🇧")).toBe(true);
     }); 
 });
 
