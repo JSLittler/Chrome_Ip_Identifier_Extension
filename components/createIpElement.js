@@ -1,41 +1,22 @@
 import getFlag from './getFlag.js';
-import createParagraph from './createParagraph.js';
 
 const createIpElement = (ipDetails) => {
-  const newElement = document.createElement("div");
+  const newElement = document.createElement("span")
 
-  newElement.classList = "special-ip";
+  newElement.classList = "special-ip"
   newElement.style.color = "green";
   newElement.innerHTML = ipDetails.ip;
 
-  const newSpan = document.createElement("div");
+  const newSpan = document.createElement("span");
 
-  const city = createParagraph(`City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`);
-  newSpan.appendChild(city);
+  var toolTipString = `<div class="ip-tooltip"><table><tr><td>Location</td><td>${ipDetails.city}, ${ipDetails.region}, ${ipDetails.country} ${getFlag(ipDetails.country_code)} </td></tr><tr><td>Provider</td><td>${ipDetails.org}</td></tr></table></div>`;
 
-  const toolTip = document.createElement("div");
-
-  const region = createParagraph(`Region: ${ipDetails.region}`);
-  const country = createParagraph(`Country: ${ipDetails.country_name}`);
-
-  toolTip.appendChild(region);
-  toolTip.appendChild(country);
-
-  newElement.appendChild(newSpan);
-
-  newElement.addEventListener("mouseenter", function( event ) {
-    event.target.style.color = "purple";
-    newSpan.appendChild(toolTip);
-  }, false);
-
-  newElement.addEventListener("mouseleave", function( event ) {
-    event.target.style.color = "green";
-    newSpan.removeChild(toolTip);
-  }, false);
-
+  newSpan.classList = "extra-ip-city";
+  newSpan.innerHTML = '   ' + getFlag(ipDetails.country_code) + toolTipString;
   newElement.appendChild(newSpan);
 
   return newElement;
+
 };
 
 export default createIpElement;
