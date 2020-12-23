@@ -10,16 +10,18 @@ const createIpElement = (ipDetails) => {
   const newSpan = document.createElement("div");
 
   newSpan.classList = "extra-ip-city";
-  newSpan.innerHTML = ipDetails.city + " " + getFlag(ipDetails.country_code);
+  const cityEl = document.createElement("p");
+  cityEl.innerHTML = `City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`;
+  newSpan.appendChild(cityEl);
 
   const toolTip = document.createElement("div");
 
   const locationEl = document.createElement("p");
-  const location = document.createTextNode(ipDetails.region);
+  const location = document.createTextNode(`Region: ${ipDetails.region}`);
   locationEl.appendChild(location);
 
   const countryEl = document.createElement("p");
-  const country = document.createTextNode(`${ipDetails.country_name} ${getFlag(ipDetails.country_code)}`);
+  const country = document.createTextNode(`Country: ${ipDetails.country_name}`);
   countryEl.appendChild(country);
 
   toolTip.appendChild(locationEl);
