@@ -20,6 +20,5 @@
 ### In your terminal, navigate to the root of the project and run 'npm test'.
 
 ## Todo
-### 4. Display information on hover
 ### 5. Add meerkat icon for ctm listed ips and button
 ### 9. Update readme
