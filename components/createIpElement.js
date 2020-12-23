@@ -16,7 +16,6 @@ const createIpElement = (ipDetails) => {
   newElement.appendChild(newSpan);
 
   return newElement;
-
 };
 
 export default createIpElement;
