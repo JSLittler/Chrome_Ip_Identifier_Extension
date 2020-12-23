@@ -10,7 +10,6 @@ const createIpElement = (ipDetails) => {
 
   const newSpan = document.createElement("div");
 
-  // newSpan.classList = "extra-ip-city";
   const city = createParagraph(`City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`);
   newSpan.appendChild(city);
 
@@ -21,7 +20,6 @@ const createIpElement = (ipDetails) => {
 
   toolTip.appendChild(region);
   toolTip.appendChild(country);
-  // toolTip.classList = "ip-tooltip";
 
   newElement.appendChild(newSpan);
 
@@ -38,7 +36,6 @@ const createIpElement = (ipDetails) => {
   newElement.appendChild(newSpan);
 
   return newElement;
-
 };
 
 export default createIpElement;
