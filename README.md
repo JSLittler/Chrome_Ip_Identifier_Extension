@@ -2,9 +2,8 @@
 
 ## Purpose
 ### Designed to work with splunk to automatically trace the location of ip addresses identified in the app and highling them with the following information:
-#### IP Address
-#### City
-#### Country - Flag
+#### IP Address with Country - Flag
+#### City, region and country - on hover
 
 ## To Run
 ### clone or fork this repo
@@ -20,5 +19,4 @@
 ### In your terminal, navigate to the root of the project and run 'npm test'.
 
 ## Todo
-### 5. Add meerkat icon for ctm listed ips and button
-### 9. Update readme
+### Add meerkat icon for ctm listed ips and button
