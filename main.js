@@ -1,10 +1,12 @@
-import decoratingManager from './components/decoratingManager.js';
+import runDecorator from './components/runDecorator.js';
 
 setTimeout(()=>{
     console.log('hit');
-    var el1 = document.createElement('div')
-    el1.innerText="Trace IPs 🌍"
-    el1.addEventListener("click", decoratingManager);
-    document.querySelectorAll('[data-role="left-nav"]')[0].appendChild(el1);
+    var button = document.createElement('button');
+    button.innerText="Trace IPs 🌍";
+    button.addEventListener("click", runDecorator);
+    button.style.background = "green";
+    button.style.color = "white";
+    document.querySelectorAll('[data-role="left-nav"]')[0].appendChild(button);
     
 }, 5000)
