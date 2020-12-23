@@ -1,6 +1,14 @@
 import getFlag from './getFlag.js';
 
 const createIpElement = (ipDetails) => {
+  const createParagraph = innerText => {
+    const element = document.createElement("p");
+    element.innerText = innerText;
+    element.style.color = "green";
+
+    return element;
+  }
+
   const newElement = document.createElement("div");
 
   newElement.classList = "special-ip";
@@ -10,20 +18,13 @@ const createIpElement = (ipDetails) => {
   const newSpan = document.createElement("div");
 
   newSpan.classList = "extra-ip-city";
-  const city = document.createElement("p");
-  city.innerText = `City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`;
-  city.style.color = "green";
+  const city = createParagraph(`City: ${ipDetails.city} ${getFlag(ipDetails.country_code)}`);
   newSpan.appendChild(city);
 
   const toolTip = document.createElement("div");
 
-  const region = document.createElement("p");
-  region.innerText = `Region: ${ipDetails.region}`;
-  region.style.color = "green";
-
-  const country = document.createElement("p");
-  country.innerText = `Country: ${ipDetails.country_name}`;
-  country.style.color = "green";
+  const region = createParagraph(`Region: ${ipDetails.region}`);
+  const country = createParagraph(`Country: ${ipDetails.country_name}`);
 
   toolTip.appendChild(region);
   toolTip.appendChild(country);
