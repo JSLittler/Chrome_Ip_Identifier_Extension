@@ -8,5 +8,4 @@ setTimeout(()=>{
     button.style.background = "green";
     button.style.color = "white";
     document.querySelectorAll('[data-role="left-nav"]')[0].appendChild(button);
-    
-}, 5000)
+}, 2500);
