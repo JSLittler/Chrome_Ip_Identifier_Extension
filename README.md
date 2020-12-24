@@ -19,4 +19,6 @@
 ### In your terminal, navigate to the root of the project and run 'npm test'.
 
 ## Todo
-### Add meerkat icon for ctm listed ips and button
+### Deal with flakiness
+### Add facility for error handling (perhaps another button)
+### Add integration test
