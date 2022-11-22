@@ -10,7 +10,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://splunk.meer-spacestation.co.uk/*", "http://localhost:3000/"],
+      "matches": ["https://splunk.prod.ctmers.io/*", "http://localhost:3000/"],
       "css": ["splunkIpStyles.css"],
       "js": ["content.js"]
     }
